@@ -1,0 +1,1507 @@
+WELCOME TO  Git, GitHub, Ansible & Terraform with GCP & GitHub Actions
+TRAINER NAME: SHRUTI KULSHRESTHA
+TRAINER EMAIL ID/CONTACT INFORMATION : +91-8368186187 (ONLY FOR WHATSAPP )
+
+
+Time schedule : 4hours   10days  - 80%lab    20% theory 
+
+
+BREAK IN SESSION
+
+START TIME        :               9:00AM        
+SNACK TIME        :            10:00AM -10:30AM ( 30MINS)
+END TIME            :               12:00
+
+IN BETWEEN  IF REQUIRED , you are requested to ask for breather  to take emergency/professional calls 
+
+
+BASIC OF GIT :   DAY1
+GITHUB :             DAY2
+ANSIBLE :            DAY3-DAY6
+TERRAFORM:  DAY7-DAY10 
+
+
+ KOENIG PORTAL  :  https://www.mykoenig.com/  ( TO ACCESS RECORDINGS , MEETING LINK AND DOCUMENTATION)
+
+GCP  CREDITINALS LINK  
+https://limewire.com/d/zguyN#uMldMho9Nq
+
+PRESENTATION LINK :-
+
+
+google cloud sconsole :   https://cloud.google.com/
+
+github login : https://github.com/
+
+
+GIT 
+•Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+•You can also make a copy of your file, make changes to that copy, and then merge these changes to the original copy.
+•You are not limited to using Git just for source code files – you can also use it to keep track of text files or even images. This means that Git is not just for developers – anyone can find it helpful.
+
+Request to create a github account with personal email address
+https://github.com/ 
+
+mkdir:----- make directory
+ cat --------viewing the content of the file 
+ cp-------- copy the content of the file to other location
+ vim filename  < to create any file .
+ rm ------ delete the file.
+ cd --- change directory
+ su ---- switch user
+ su - root -------- switch to root user
+ su - username ---switch to that user
+ useradd  -- create a user
+passwd ---- password for user  
+ip addr------------------ to check ip address of the machine 
+
+
+######
+vim editor
+insert mode
+esc 
+i
+ 
+ this is my first file 
+
+esc
+shift+:
+wq!
+w=== save
+q==quit
+! ===forceful quit
+
+
+
+
+STEP1
+ sudo yum install git  -y 
+ mkdir demo
+ cd  demo 
+
+STEP2 
+Initial Configuration
+#git config --global user.name "shruti-linux"
+#git config --global user.email "shrutikulshreshta@gmail.com"
+
+#git config --list -> to verify
+
+STEP3
+#git init -> to initialize repo
+#vim file1
+hello, this is file1. the first file in github , here for example u can write codes 
+#git status 
+#git add . -> to add files in git 
+git add -f  file1.txt
+#git status
+#git commit -a -m "file1 added" {a: all, m : message } {record changes to repositorty}
+#git status
+
+
+
+Work with Remote
+======================
+To create PAT(personal access token): go to settings -> developer settings -> Personal access tokens -> generate new token:
+        give token name: mytoken
+        select all the below options then generate token
+NOTE: COPY YOUR TOKEN ELSE YOU WILL NOT BE ABLE TO SEE AGAIN
+
+to git system:
+#cd /project1
+#git remote add origin <GITHUB URL>        (i.e. https://github.com/shruti-linux/learning.git)
+#git remote -> to list remotes
+
+#git remote -v -> to list remotes with URLs
+#git push origin master -> to push code
+Username for 'https://github.com': shruti-linux
+Password for 'https://shrutikulshreshta@github.com': paste token value here.
+
+
+ROLL  BACK 
+#cd project1
+#git status -> to show status of git repository
+#git init -> to initialize repo
+#vim file1
+THIS IS FILE1
+#git status 
+#git add . -> to add files in git 
+#git status
+#git commit -a -m "file1 added" {a: all, m : message } {record changes to repositorty}
+#git status
+git status
+#vim file2
+THIS IS FILE2
+#git status
+#git add .
+#git commit -a -m "file2 added"
+
+Let's modify file1
+THIS IS FILE1 UPDATEDls 
+
+#git add .
+#git commit -a -m "file1 updated"
+
+#git log -> to see logs
+
+to rollback changes:
+#git log 
+COPY COMMIT ID
+#git checkout <COMMIT ID>
+
+
+git --help ( to seek help from CLI)
+
+
+Branching
+===================
+#git branch -> to show branches
+* asterick means  current/active branch 
+#git branch <BRANCH NAME> -> to create new branch
+#git checkout -b <BRANCH NAME> -> to create branch and also switch branch
+
+    #git checkout <BRANCH NAME> -> to switch branch
+
+
+demo - branch:
+#git branch dev 
+#git checkout dev 
+#vim <FILENAME>
+hello this is dev branch working
+#git add .
+#git commit -a -m "dev branch file added"
+#git checkout master
+WE WILL NOT SEE NEW FILE CREATED REASON FILE WAS CREATED IN THE DEV BRANCH
+#git merge dev -> merge changes from dev branch
+
+git branch 
+
+  git branch
+  git branch development
+  git branch
+ git branch  feature
+git branch  release
+ git branch  hotfix
+ git branch  
+ 
+ 
+ 
+ Github actions codes
+ 
+ repositoryname/.github/workflows/hello-world.yaml
+
+#First runner
+
+on:
+  push:
+    branches:
+      - master  # Or whichever branch you want
+
+jobs:
+  hello:
+    name: Say Hello
+    runs-on: self-hosted
+
+    steps:
+      - name: Print Hello World
+        run: echo "Hello, World from self-hosted runner!"
+        
+        
+        name: Install HTTPD on CentOS 9
+
+
+
+RUNNER2: INSTALL OF WEB SERVER
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  install-httpd:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Install Apache HTTPD
+        run: |
+          sudo dnf install -y httpd
+          sudo systemctl enable httpd
+          sudo systemctl start httpd
+          sudo systemctl status httpd
+
+      - name: Serve a test page
+        run: |
+          echo "Hello from GitHub Actions on CentOS 9!" | sudo tee /var/www/html/index.html
+
+
+
+
+# Both server exaple
+
+name: Echo Message on Multiple CentOS 9 Runners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  echo-on-node1:
+    name: Echo on CentOS 9 Node 1
+    runs-on: [self-hosted, centos9, node1 ]
+
+    steps:
+      - name: Say Hello from Node 1
+        run: |
+          echo "👋 Hello from CentOS 9 - Node 1"
+          hostname
+          date
+
+  echo-on-node2:
+    name: Echo on CentOS 9 Node 2
+    runs-on: [self-hosted, centos9, node2]
+    needs: echo-on-node1
+
+    steps:
+      - name: Say Hello from Node 2
+        run: |
+          echo "🚀 Hello from CentOS 9 - Node 2"
+          hostname
+          date
+
+
+
+---------------------------------------------------------------------------------------------------------
+DAY3:
+    
+
+    Industry-Specific Multi-Topic Analogies for Configuration Management with Ansible:
+
+1. Ansible: An Introduction: Ansible is like a universal remote control for your IT infrastructure. Just as you can use a universal remote to manage all your home electronics from one place, Ansible allows you to manage and configure your entire IT infrastructure from a central location.
+
+2. Infrastructure as a Code (IaC): IaC is like a blueprint for a house. Just as a blueprint defines all the elements of a house and how they fit together, IaC defines all the elements of a computer system and how they interact. This makes it easy to replicate the system elsewhere or rebuild it if necessary.
+
+3. Idempotency: Idempotency in Ansible is like a GPS system in your car. If you enter the same destination multiple times, the GPS system doesn't keep recalculating the route. It understands that the destination hasn't changed and thus, the route remains the same. Similarly, Ansible checks the current state of the system and only makes changes if the desired state is different from the current one.
+
+4. Ansible Playbooks: An Ansible playbook is like a recipe book for a chef. Each recipe (playbook) contains a list of ingredients (tasks) and step-by-step instructions on how to make a dish (configure a system). Just as a chef can use the same recipe to make a dish over and over again, an IT professional can use a playbook to reliably replicate a configuration across multiple systems.
+
+5. Variables in Ansible: Variables in Ansible are like placeholders in a form letter. Just as you can write a letter with spaces for names and addresses that you fill in for each recipient, you can write an Ansible playbook with variables for system-specific settings. This allows you to use the same playbook for different systems, filling in the variables as needed.
+
+Step-by-Step Instructions: 
+    
+Step1: Entry of all the Managed Host in host file
+ 
+On master node,worker1 and worker2 node 
+ 
+sudo -i 
+vim /etc/hosts
+10.190.0.12 shruti-master
+10.128.0.4  shruti-node1
+10.204.0.2 shruti-node2
+~                                                                                                               
+~                                
+Cross-Verify 
+            Run these commands from master node 
+·       ping -c3 worker1 
+·       ping -c3 worker2 
+ 
+  Step2: Add  the user of your choice in the system with same name in master worker1 and worker2
+ 
+On master node,worker1 and worker2 node 
+·       useradd  shruti                         
+·       passwd   shruti
+ 
+  Step3: Assigning the added user the sudoers privilegete
+ 
+on master node worker1 and worker2 node 
+       vim /etc/sudoers
+
+shruti    ALL=(ALL) NOPASSWD:  ALL
+ 
+
+Cross-verify the entries is made in sudoers file 
+ 
+STEP4: Password less authentication via ssh
+ 
+ su - shruti
+ 
+vim master node:
+·       ssh-keygen
+   
+   on node1
+   su - shruti
+   mkdir .ssh
+   ls -la 
+   cd .ssh
+   vim authorized_keys    
+  paste the public key 
+
+ 
+[shruti@shruti-master .ssh]$ ssh shruti-node1   
+[shruti@shruti-master .ssh]$ ssh shruti-node2
+
+on node1 
+[shruti@shruti-node1 .ssh]$ ssh shruti-master
+
+on node2
+[shruti@shruti-node2 .ssh]$ ssh shruti-master
+
+
+on GITHUB 
+CREATE REPOSITORY UNDER ANSIBLE-CODE NAME and  add a readme.file
+
+
+Authentication
+
+
+√ Connected to GitHub
+
+# Runner Registration
+
+Enter the name of the runner group to add this runner to: [press Enter for Default] 
+
+Enter the name of runner: [press Enter for shruti-master] shruti-master
+
+This runner will have the following labels: 'self-hosted', 'Linux', 'X64' 
+Enter any additional labels (ex. label-1,label-2): [press Enter to skip] ansible-master
+
+√ Runner successfully added
+√ Runner connection is good
+
+# Runner settings
+
+Enter name of work folder: [press Enter for _work] 
+
+
+
+create a directory .githubaction/workflow/install-ansible.yaml
+
+
+Step5: Install  the Package
+
+
+GITHUB ACTIONS WORKFLOW TO INSTALL ANSIBLE ON CONTROL NODE 
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  install-ansible:
+    name: Install Ansible
+    runs-on: [ self-hosted, ansible-master, linux ]
+
+    steps:
+      - name: Show system info
+        run: |
+          echo "Running on:"
+          hostname
+          cat /etc/os-release
+
+      - name: Install EPEL repository
+        run: |
+          sudo dnf install -y epel-release
+
+      - name: Install Ansible
+        run: |
+          sudo dnf install -y ansible
+
+      - name: Check Ansible version
+        run: |
+          ansible --version
+
+
+
+GITHUB ACTIONS WORKFLOW TO CREATE INVENTORY FILE ON CONTROL NODE
+
+
+name: Generate Ansible Inventory
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-inventory:
+    runs-on: [ ansible-master ]
+
+    steps:
+     
+
+      - name: Create inventory directory
+        run: |
+          sudo -u shruti mkdir -p /home/shruti/ansible/
+          sudo chown -R shruti:shruti /home/shruti/ansible
+
+      - name: Generate inventory.yaml
+        run: |
+          sudo -u shruti bash -c 'cat > /home/shruti/ansible/inventory.yaml' << 'EOF'
+          ---
+          all:
+            children:
+              webservers:
+                hosts:
+                  web01:
+                    ansible_host: 10.128.0.4
+                    ansible_user: shruti
+                    
+
+              databases:
+                hosts:
+                  db01:
+                    ansible_host: 10.204.0.2
+                    ansible_user: shruti
+                    db_version: 14
+                   
+
+              
+          EOF
+
+
+GITHUB ACTIONS WORKFLOW TO CREATE ANSIBLE.CFG  FILE ON CONTROL NODE
+
+name:  Configuration ansible.cfg 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-ansible-cfg:
+    runs-on: [ ansible-master ]
+
+    steps:
+
+
+      - name: Generate ansible.cfg
+        run: |
+          sudo -u shruti bash -c 'cat > /home/shruti/ansible/ansible.cfg' << 'EOF'
+          [defaults]
+          inventory      = /home/shruti/ansible/inventory.yaml
+          roles_path    = /home/shruti/ansible/roles
+          host_key_checking = False
+          remote_user = shruti
+          private_key_file = /home/shruti/.ssh/id_rsa
+          log_path = /home/shruti/ansible/ansible.log
+          forks = 5
+          gathering = smart
+          fact_caching = jsonfile
+          fact_caching_connection = /home/shruti/ansible/facts_cache
+          
+
+          [privilege_escalation]
+          become = True
+          become_method = sudo
+          become_user = root
+          become_ask_pass = False
+
+          [ssh_connection]
+          ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o ConnectTimeout=10
+          control_path = /home/shruti/.ssh/id_rsa-%%r@%%h:%%p
+          EOF
+          
+
+      - name: Set proper permissions
+        run: |
+          sudo chown shruti:shruti /home/shruti/ansible/ansible.cfg
+          sudo chmod 644 /home/shruti/ansible/ansible.cfg
+
+      - name: Verify configuration
+        run: |
+          echo "Ansible configuration:"
+          sudo -u shruti ls -la /home/shruti/ansible/ansible.cfg
+          echo -e "\nContents:"
+          sudo -u shruti cat /home/shruti/ansible/ansible.cfg
+          
+          
+    TESTING CONNECTION  FROM MASTER ON MANAGED HOSTS AND RUNNING AD-HOC COMMAND TO VALIDATE THE CONNECTION
+
+
+name: Ansible Connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-ansible-connections:
+    runs-on: [ ansible-master ]
+
+    steps:
+    
+      - name: Test connections with ping module
+        run: |
+          ansible all --list-hosts -i /home/shruti/ansible/inventory.yaml
+          ansible all -m ping -i /home/shruti/ansible/inventory.yaml
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+ ansible all -m command  -a ' hostname'
+
+ansible all -m command  -a 'hostname -i '
+ ansible all -m command  -a 'date '
+
+ansible all -m command  -a 'pwd'
+ ansible all -m command  -a 'whoami'
+
+
+ansible databases  -m yum -a 'name=httpd state=present'
+ansible webservers  -m yum -a 'name=docker state=present'
+ansible all  -m yum -a 'name=git state=present'
+
+
+
+ANSIBLE  INBUILT DOCUMENTATION 
+ansible-doc –l
+ansible-doc yum
+ansible-doc  firewalld 
+
+
+/Examples 
+
+TASK1    INSTALLING THE WEBSERVER BUT THROUGH AD-HOC  COMMAND 
+
+•Install Package    --PACKAGE NAME --HTTPD
+•Create web page     ---- module =copy 
+•Start that service           ---module= service
+Cross verify
+
+
+
+•Install Package
+ansible all –m yum –a ‘name=httpd state=present’
+
+Create web page
+
+
+ansible all -m copy -a 'content="hi this is my first web page" dest=/var/www/html/index.html'
+
+
+•Start the HTTP service
+ansible all -m service -a 'name=httpd state=started enabled=true'
+
+ansible-doc service
+/EXAMPLES
+
+
+
+•Cross Verify
+curl worker1
+curl worker2
+Login to firefox and open http://worker1 in the web browser
+Login to firefox and open http://worker2 in the web browser
+
+
+
+TASK2: 
+   1.  INSTALL PACKAGE NAMED FIREWALLD
+   2.  START SERVICE OF FIREWALLD 
+   3. cross-verify
+
+NOW, 
+
+  4.   ADD A SERVICE WHICH http  IN FIREWALLD 
+  5     add a port number and transport 
+   6. . cross-verify
+
+
+
+ansible all -m yum -a 'name=firewalld state=present'
+
+ansible all -m service -a 'name=firewalld state=started enabled=true'
+
+ansible all -a 'systemctl status firewalld'
+
+ansible all -m firewalld -a 'service=http permanent=true state=enabled immediate=true'
+Cross verify
+ansible all -a 'firewall-cmd --list-all'
+
+                                                                                               #firewall-cmd --reload < this command get execute when immediate =true get executed >
+
+ansible all –m firewalld –a ‘port=80/tcp permanent=yes state=enabled immediate=true’
+Cross verify
+Ansible all –a ‘firewall-cmd –list –all’
+
+Ansible all –m firewalld –a ‘port=80/tcp permanent=no state=disabled  immediate=true’
+Cross verify
+Ansible all –a ‘firewall-cmd –list –all’
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Vim Cheat Sheet
+ https://vim.rtorr.com/
+ 
+documetation: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#about-playbooks
+
+
+ansible-doc -l 
+
+INDENTATION HELP 
+ VIM ~/.vimrc
+
+
+set ai
+set nu
+set cursorcolumn
+set ts=2
+set et  
+
+
+TASK1: ADDING USER NAMED vini  WITH UID 30001
+
+ ---
+- name: (optional) adding a user , assinging a uid
+  hosts: webservers
+  tasks:
+  - name: adding a user with uid
+    user:
+      name: vini
+      uid: 30003
+      state: present
+
+ansible-playbook playbook1.yml --syntax-check
+ansible-playbook -C playbook1.yml
+ansible-playbook playbook1.yml
+
+Cross verify
+ansible all –a ‘id vini’
+
+TASK 2:    WEB-SERVER INSTALLATION
+
+1.Install the package of httpd  --- yum
+2.Create a web page                  ---copy
+3.Start that service                  ---service
+4.Cross verify
+ 
+ ---    
+- name: installation web-server and start the service
+  hosts: all
+  tasks:
+  - name: installation of package
+    yum:
+      name: httpd
+      state: latest
+       
+  - name: creatring  a webpage
+    copy:
+      content: " hello vini and felipe from brazil"
+      dest: /var/www/html/index.html
+       
+  - name: start the service
+    service:
+      name: httpd
+      state: started
+      enabled: true
+
+ ansible-playbook playbook2.yml --syntax-check
+ansible-playbook -C playbook2.yml
+ansible-playbook playbook2.yml
+
+Cross Verify 
+
+
+curl worker1
+curl worker2
+
+ansible all –a ‘systemctl stop httpd’
+ansible all –a ‘yum remove httpd –y’
+
+
+
+https://rms.koenig-solutions.com/InterimFeedback.aspx?id=b2b4b2b7b8b7&frm=3
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DAY5: TOPICS 
+
+VARIABLES 
+CONDITIONS 
+LOOPS
+TAGS 
+NOTIFY AND HANDLERS
+ANSIBLE VAULTS
+
+
+Variables in the same playbook 
+
+---
+- name: expermenting the variables in the same playbook
+  hosts: web01
+  vars:
+    pkg: autofs
+    usr: mark 
+  tasks:
+  - name: installing the packages  of {{ pkg }}
+    yum:
+      name: "{{ pkg }}"
+      state: latest
+  - name: start the service of {{ pkg }}
+    service:
+      name:  "{{ pkg }}"
+      state: started
+      enabled: true
+  - name:  add a user name  {{ usr }}
+    user:
+      name:  "{{ usr }}"
+      state: present
+ 
+ 
+ansible-playbook playbook-var.yaml --syntax-check
+ansible-playbook playbook-var.yaml -C
+ansible-playbook playbook-var.yaml
+
+ansible web01 -a 'yum list autofs'
+ansible web01 -a 'systemctl status  autofs'
+ansible web01 -a 'id mark'
+
+
+variables in the different  files 
+
+vim my.var.yaml
+
+pkg: httpd
+usr: ronnie
+
+
+--- 
+- name: defining the variables in the separate var file
+  hosts: all
+  vars_files:
+  - /home/shruti/ansible/my-var.yaml
+  tasks:
+  - name: installing the package {{ pkg }}
+    yum:
+      name: "{{ pkg }}"
+      state: latest
+  - name: start the service  {{ pkg }}
+    service:
+      name: "{{ pkg }}"
+      state: started
+      enabled: true
+     
+  - name: add a user name {{ usr }}
+    user:
+      name: "{{ usr }}"
+      state: present
+
+CHANGING VARIABLES FROM COMMAND LINE 
+
+ansible-playbook -e 'pkg=vsftpd' -e 'usr=taki' playbook3-var-same-playbook.yaml 
+
+
+
+CONDITIONS IN PLAYBOOK
+
+---  
+- name: conditional playbook  learning
+  hosts: all
+  tasks:
+  - name: Install httpd if the os is centos
+    yum:
+      name: httpd
+      state: present
+    when: ansible_distribution == 'CentOS'
+     
+  - name: installa apache2 package
+    yum:
+      name: apache2
+      state: present
+    when: ansible_distribution == 'Ubuntu'
+
+ansible-playbook playbook5-condition.yaml --synatx-check
+ansible-playbook playbook5-condition.yaml -C
+ansible-playbook playbook5-condition.yaml
+
+
+ansible all -m setup -a 'filter=ansible_kernel'
+
+CONDITION2
+
+---  
+- name: Testing multiple Conditions
+  hosts: all
+  tasks:
+  - name: install httpd package
+    yum:
+      name: httpd
+      state: present
+    when: (ansible_distribution == 'CentOS' ) and ( ansible_kernel == '5.14.0-603.el9.x86_64')
+     
+  - name: install apache2 package
+    apt:
+      name: apache2
+      state: present
+    when: (ansible_distribution == 'Ubuntu' ) or ( ansible_distribution == 'RedHat')
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+LOOPS
+---
+- name: Creating the multiple user account with using loops
+  hosts: all
+  tasks:
+  - name: create the multiple user
+    user:
+      name: "{{ item }}"
+      state: present
+    loop:
+    - alex
+    - martin
+    - john
+    - jenifer
+    - oracle
+    - linux
+    - redhat
+    
+
+Using with_items for looping
+---    
+- name: create multiple user
+  hosts: web01
+  tasks:
+  - name: adding user
+    user:
+      name: "{{ item.name }}"
+      groups: "{{ item.groups}}"
+      state: present
+    with_items:
+    - { name: 'alice', groups: 'linux' }
+    - { name: 'bob' , groups: 'linux'}
+    - { name: 'henry' , groups: 'linux'}
+                                                                                        
+ansible-playbook playbook8-loop2.yaml --syntax-check
+ ansible-playbook playbook8-loop2.yaml
+  ansible web01 -a ' cat /etc/group'            
+  
+  Loops with using variables                                                                         
+ 
+ ---  
+- name: declaring the variables in the loops
+  hosts: db01
+  vars:
+    usr:
+    - tom
+    - saywer
+    -  harrys
+  tasks:
+  - name: creating multiple user account
+    user:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ usr }}"
+     
+   ansible-playbook playbook9-loop2.yaml --syntax-check
+ ansible-playbook playbook9-loop2.yaml
+  ansible web01 -a ' cat /etc/passwd'        
+  
+     TAGS:
+Tags:
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html#tags         
+---
+- name: learning the tags
+  hosts: db01
+  tasks:
+  - name: install the package
+    yum:
+      name: git
+      state: present
+    tags:
+    - git
+ 
+ 
+  - name: check the connection
+    ping:
+
+  - name: copy
+    copy:
+      src: my-var.yaml
+      dest: /home/shruti
+                                                                                                  
+   ansible-playbook playbook10-tags.yaml  --tags "git"                                                                                               
+                                                                                                  
+---  
+- name: installation of web servers and start service
+  hosts: all
+  tasks:
+  - name: installing the package
+    yum:
+      name: httpd
+      state: latest
+     
+  - name: Creating a webpage
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+    tags:
+    - webpage
+     
+  - name:  start the service
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    tags:
+    - service
+    
+ansible-playbook playbook2-webserver-install.yaml --tags "webpage,service" 
+ansible-playbook playbook-tag.yaml --skip-tags " service"  ( it will not run that task--- skipping the task)
+
+
+---  
+- name: learning the tags
+  hosts: db01
+  tasks:
+  - name: install the package
+    yum:
+      name: git
+      state: present
+    tags:
+    - git
+
+     
+  - name: check the connection
+    ping:
+     
+  - name: copy
+    copy:
+      src: my-var.yaml
+      dest: /home/shruti
+    tags:
+    - copy
+
+ansible-playbook playbook10-tags.yaml  --skip-tags "copy"
+
+NOTIFY AND HANDLERS
+https://docs.ansible.com/ansible/2.9/user_guide/playbooks_intro.html#handlers-running-operations-on-change
+
+---    
+- name: understanding notify and handlers
+  hosts: all
+  tasks:
+  - name:  install the package
+    yum:
+      name: httpd
+      state: present
+       
+  - name: create a webpage
+    copy:
+      content: " Hello we are understanding notify and handlers"
+      dest: /var/www/html/index.html
+    notify: restart_web
+       
+  handlers:
+  - name: restart_web
+    service:
+      name: httpd
+      state: restarted
+
+
+ansible-playbook playbook11.yaml                               
+
+
+ANSIBLE FACTS
+
+
+ansible all -m setup | less-> to gather facts
+ansible all -m setup -a 'filter=ansible_distribution' -------------------------- to know os name
+ansible all -m setup -a 'filter=ansible_fqdn' --------------------------------- to know fqdn
+ansible all -m setup -a 'filter=ansible_hostname' ---------------------------- to know hostname
+ansible all -m setup -a 'filter=ansible_kernel'  --------------------------------- to know kernel version
+ansible all -m setup -a 'filter=ansible_bios_version'  ------------------------- to know bios version
+ansible all -m setup -a 'filter=ansible_architecture'   ----------------------------------- to know os version
+
+JINJA2 TEMPLATE 
+
+vim myjinja.j2
+
+this is the information about the managed host
+ 
+your hostname: {{ ansible_facts['hostname'] }} ip address {{ ansible_facts['default_ipv4']['address'] }}
+
+#################################################
+
+
+vim playbook12.yaml 
+---    
+- name: collection of managed hosts
+  hosts: web01
+  tasks:
+  - name: jinja2
+    template:
+      src: /home/shruti/ansible/myjinja2.j2
+      dest: /tmp/training
+      owner: shruti
+      mode: 0644
+       
+ansible-playbook playbook12.yaml
+
+go to the node1
+                
+sudo cat /tmp/training ---- check output
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ANSIBLE-VAULTS
+PLAYBOOK THROUGH ACTIONS
+ROLES
+DYNAMIC INVENTORY
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Qubits:  Multiple choice  Questions:https://www.qubits42.com/live/52820
+
+
+
+ANSIBLE VAULTS
+https://docs.ansible.com/ansible/latest/cli/ansible-vault.html
+
+ansible-vault create <playbook> -> to create playbook with encryption
+ansible-vault encrypt <playbook> -> to encrypt existing playbook
+ansible-vault rekey <playbook_name> to change the encrypted password of a playbook
+ansible-vault decrypt <playbook> -> to decrypt playbook
+ansible-vault view <playbook> -> to view playbook
+ansible-vault edit <playbook> -> to edit playbook
+ansible-playbook <playbook> --syntax-check --ask-vault-pass -> to syntax check of the playbook
+ansible-playbook <playbook> -C --ask-vault-pass -> For dry-run of the playbook
+ansible-playbook <playbook>  --ask-vault-pass -> For running  of the playbook
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PLAYBOOK RUN THROUGH GITHUB ACTIONS
+actions/checkout@v4:
+This is a pre-built action that checks out your repository's code, making your playbook and other files available to the workflow.
+
+uses: actions/setup-python@v5: This action sets up the Python environment, which is required to install and run Ansible.
+
+Directory structure
+your-repo/
+├── .github/
+│   └── workflows/
+│       └── playbook-runner.yaml
+
+├── playbook1-useradd.yaml
+    
+
+
+create the file in this location 
+.github/workflows/playbook-runner.yaml
+
+
+
+name: Run Ansible Playbook
+on:
+ push:
+   branches: [main]
+ pull_request:
+   branches: [main]
+ workflow_dispatch:
+  
+
+jobs:
+  ansible-playbook:
+    runs-on: [ ansible-master ]  # Change this if you're not using a self-hosted runner
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute Ansible Playbook
+     
+        run: |  
+           ansible-playbook  playbook1-useradd.yaml -i /home/shruti/ansible/inventory.yaml --become
+
+
+####playbook1-useradd.yaml###########
+
+
+---
+- name: (optional field ) adding a user named ronny  , assinging a uid to the user 
+  hosts: web01
+  tasks:
+  - name: adding a user with uid
+    user:
+      name: ronny 
+      uid: 30015
+      state: present
+----------------------------------------------------------------------------------------------------------------------
+
+
+
+Directory structure
+your-repo/
+├── .github/
+│   └── workflows/
+│       └── playbook-runner.yaml
+
+├── playbook2-file-lineinfile-blockinfile.yaml
+
+create the file in this location
+.github/workflows/playbook-runner.yaml
+
+
+
+name: Run Ansible Playbook
+on:
+ push:
+   branches: [main]
+ pull_request:
+   branches: [main]
+ workflow_dispatch:
+ 
+
+jobs:
+  ansible-playbook:
+    runs-on: [ ansible-master ]  # Change this if you're not using a self-hosted runner
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute Ansible Playbook
+ 
+        run: |
+           ansible-playbook  playbook2-file-lineinfile-blockinfile.yaml -i /home/shruti/ansible/inventory.yaml --become
+
+
+
+
+
+
+####playbook2-file-lineinfile-blockinfile.yaml###########
+
+
+---    
+- name: understanding file module
+  hosts: db01
+  tasks:
+  - name: using file module
+    file:
+      path: /home/shruti/file2.txt
+      owner: shruti
+      mode: 644
+      state: touch
+
+  - name: adding a line in the file
+    lineinfile:
+      name:  /home/shruti/file2.txt
+      line:  lets learn the lineinfile module. 
+      state: present
+
+  - name: adding a block in  the file
+    blockinfile:
+      name:  /home/shruti/file2.txt
+      block:  |
+         this is first line in additional block 
+         this is a second line of additional block of text
+      state: present
+
+
+
+CROSS-VERIFY ON MASTER 
+ansible all -a 'cat /home/shruti/file2.txt'
+
+Directory structure
+your-repo/
+├── .github/
+│   └── workflows/
+│       └── playbook-runner.yaml
+   
+├── x
+
+create the file in this location
+.github/workflows/playbook-runner.yaml
+
+
+
+name: Run Ansible Playbook
+on:
+ push:
+   branches: [main]
+ pull_request:
+   branches: [main]
+ workflow_dispatch:
+ 
+
+jobs:
+  ansible-playbook:
+    runs-on: [ ansible-master ]  # Change this if you're not using a self-hosted runner
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute Ansible Playbook
+ 
+        run: |
+           ansible-playbook  playbook3-ansible-administration.yaml -i /home/shruti/ansible/inventory.yaml --become
+
+
+
+
+
+
+####   playbook3-ansible-administration.yaml ###########
+
+---    
+- name: ansible administration
+  hosts: all
+  tasks:
+  - name: create a group
+    group:
+      name: manage
+      state: present
+  - name: cretae a security group
+    group:
+      name: security
+      state: present
+       
+  - name: create a dravid user profile
+    user:
+      name: dravid
+      uid: 41003
+      shell: /bin/bash
+      groups: manage,security
+      append: yes
+       
+  - name: give privilege to the group
+    copy:
+      content: " %manage ALL=(ALL) NOPASSWD: ALL"
+      dest: /etc/sudoers.d/manage
+
+
+
+ROLES 
+
+In Ansible, roles are a way to organize playbooks and make them more reusable, modular, and shareable. They provide a structured framework for grouping related tasks, variables, files, templates, and handlers.
+
+ansible-galaxy search 'nginx'
+ansible-galaxy search 'httpd'
+ansible-galaxy info geerlingguy.redis
+ansible-galaxy install geerlingguy.redis -p role/
+
+
+cd role
+vim playbook-role.yaml
+
+---                   
+- name: role          
+  hosts: web01        
+  roles:              
+   - geerlingguy.redis
+                      
+~                            
+shruti@shruti-master role]$ cp /home/shruti/ansible/inventory.yaml .
+[shruti@shruti-master role]$ cp /home/shruti/ansible/ansible.cfg .
+[shruti@shruti-master role]$ ls -l
+total 16cd role
+-rw-r--r--.  1 shruti shruti  602 Aug 22 14:53 ansible.cfg
+drwxr-xr-x. 10 shruti shruti 4096 Aug 22 14:42 geerlingguy.redis
+-rw-r--r--.  1 shruti shruti  300 Aug 22 14:53 inventory.yaml
+-rw-r--r--.  1 shruti shruti   65 Aug 22 14:51 playbook-role.yaml
+
+
+
+[shruti@shruti-master role]$ ansible-playbook playbook-role.yaml 
+
+ROLE  FOR NGINX SETUP 
+Directory structure
+your-repo/
+├── .github/
+│   └── workflows/
+│       └── roles.yaml
+└── ansible/
+        |---requirement.yaml
+        ├── site.yaml
+
+create the file in this location
+.github/workflows/roles.yaml
+
+
+name: ROLES DEPLOY OF NGINX
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ansible-deploy:
+    runs-on: ansible-master
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ansible Role
+        run: |
+          ansible-galaxy install -p /home/shruti/ansible/roles   geerlingguy.nginx
+      
+      - name: Run Ansible playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
+        run: |
+          pwd
+          cp /home/shruti/ansible/inventory.yaml  /home/shruti/ansible/roles/inventory.yaml 
+          cp /home/shruti/ansible/ansible.cfg  /home/shruti/ansible/roles/ansible.cfg 
+          ansible-playbook  ./ansible/site.yaml -i /home/shruti/ansible/inventory.yaml  --become
+
+
+# requirements.yaml
+- src: geerlingguy.nginx
+  version: ">=3.0.0"
+
+
+
+#site.yaml
+---
+- hosts: all
+  become: yes
+  roles:
+  - /home/shruti/ansible/roles/geerlingguy.nginx
+  
+  
+  
+Dynamic inventory
+  [shruti@shruti-master dynamic]$ ansible-doc -l | grep -i  gcp 
+  
+
+1.  Install python package 
+sudo yum install python3-pip -y
+
+
+2.  # Install Ansible
+pip install ansible
+
+3.  # Install GCP dependencies and Python packages
+pip install google-auth requests
+     or 
+pip3 install google-auth requests google-cloud-compute
+
+
+# Install Google Cloud collection
+ansible-galaxy collection install google.cloud
+
+
+
+Check the documentation to create service account 
+
+
+#AUTHENCATION WITH GCP
+export GCP_SERVICE_ACCOUNT_FILE=/path/to/your/service-account-key.json
+  
+  [shruti@shruti-master dynamic]$ ansible-doc -l | grep -i  gcp 
+  
+  Also save the service account token in the location /root/sa.json
+
+
+
+mkdir /home/shruti/dynamic
+cd dynamic
+
+#vim inventory.yaml
+
+---
+plugin: gcp_compute
+projects:
+          - rapid-burner-459905-a6
+auth_kind: serviceaccount
+service_account_file: /root/sa.json
+ 
+keyed_groups:
+  - key: labels
+    prefix: label
+  - key: zone
+    prefix: zone
+groups:
+  remote: "'webserver' (labels|list)"
+
+# ansible.cfg
+
+
+[defaults]
+inventory      = /home/shruti/dynamic/inventory.yaml
+roles_path    = /home/shruti/dynamic/roles
+host_key_checking = False
+remote_user = shruti
+private_key_file = /home/shruti/.ssh/id_rsa
+log_path = /home/shruti/dynamic/ansible.log
+forks = 5
+gathering = smart
+fact_caching = jsonfile
+fact_caching_connection = /home/shruti/dynamic/facts_cache
+
+
+[privilege_escalation]
+become = True
+become_method = sudo
+become_user = root
+become_ask_pass = False
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o ConnectTimeout=10
+control_path = /home/shruti/.ssh/id_rsa-%%r@%%h:%%p
+
+
+
+---
+- name: Create GCS bucket
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create a GCS bucket
+      google.cloud.gcp_storage_bucket:
+        name: my-test-xosve-ansible-hellodemosd
+        location: us-central1
+        storage_class: STANDARD
+        project: ansi-465711
+        auth_kind: serviceaccount
+        service_account_file: "/root/sa.json"
+        state: present
+        
+        
+        python3 -m pip install requests google-auth
+        
+        
+---
+- name: Create CentOS 9 VM in GCP
+  hosts: localhost
+  vars:
+    project_id: "ansi-465711"  # Define variable here
+  
+  tasks:
+    - name: Create CentOS 9 VM
+      google.cloud.gcp_compute_instance:
+        name: "centos9-vm"
+        zone: "us-central1-a"
+        machine_type: "e2-medium"
+        project: "{{ project_id }}"
+        auth_kind: serviceaccount
+        service_account_file: "/root/sa.json"
+        disks:
+          - boot: true
+            initialize_params:
+              source_image: "projects/centos-cloud/global/images/family/centos-stream-9"
+        network_interfaces:
+          - network:
+              project: "{{ project_id }}"  # Now this will work
+              name: default
+            access_configs:
+              - name: External NAT
+                type: ONE_TO_ONE_NAT
+
+---
+- name: Configure GCP firewall rules
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Add GCP firewall rule for web servers
+    google.cloud.gcp_compute_firewall:
+      name: allow-http-https
+      allowed:
+      - ip_protocol: tcp
+        ports: ['80', '443']
+      project: "ansi-465711"
+      auth_kind: serviceaccount
+      service_account_file: "/root/sa.json"
+      state: present
+------------------------------------------------------------------------------------------------------
+
+
+MUTLIPLE CHOICE QUESTIONS : QUBIT :   https://www.qubits42.com/live/52820
+
+
+testjune13-462806
+europe-southwest1-a
+
+10.204.0.11 (nic0)34.175.115.221  (nic0) 
+
+europe-southwest1-a│ Error: Error waiting for instance to create: The resource '464275222455-compute@developer.gserviceaccount.com' of type 'serviceAccount' was not found.
