@@ -1,0 +1,143 @@
+WELCOME  FOR TERRAFORM
+
+DAY1:  INSTALL THE TERRAFORM , GCP CLI SETUP , VSC 
+DAY2: PROVIDER, CREATE INSTANCE -WINDOWS ,LINUX , defines variables in terraform,storage account, VPC,FIREWALL
+DAY3: store remotely in GCS, parameters
+DAY4: pipeline for the terraform and ansible  with github action
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE THE WINDOWS INSTANCE
+INSTANCE NAME: YOUR-NAME-WINDOWS
+REGION: CHOSE ACCORDINGLY
+ZONE: CHOSE ACCORDINDGLY
+MACHINE TYPE: E2
+
+
+OS-STORAGE 
+CHANGE TO WINDOWS SERVERS
+
+DATA PROTECTION
+nO BACKUP
+
+
+NETWORKING
+
+Allow HTTP traffic
+Allow HTTPS traffic
+Allow Load Balancer Health Checks
+
+
+CREATE
+
+and start the WINDOWS INSTANCES
+
+CONNECTION TO THE GCP INSTANCE THROUGH RDP
+------------------------------------------------------------------------------
+Now click on RDP >>>>set windows password >>>>
+change user name: yourname
+copy the password and save somewhere it important 
+------------------------------------------------------------------------------
+click on the download the RDP FILE >>> IN DOWNLOAD >>> CLICK ON KEEP >>> OPEN THE FILE 
+CLICK ON CONNECT >>>> click on MORE CHOICES >>> use a different user
+
+add the username and password 
+
+click on yes 
+
+Congratulation your now successfully login to the REMOTE DESTOP OF YOUR GCP INSTANCE 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+INSTALLATION OF TERRAFORM FOR WINDOWS 
+
+WEBSITE: https://developer.hashicorp.com/terraform/install
+
+
+scroll down to windows 
+select the 386 and download the file 
+go to the c drive and there create the directory under terraform
+paste the extracted file in the location c:/terraform
+
+NEXT 
+
+EDIT THE SYSTEM ENVIRONMENT VARIABLES
+
+click on Environment Variables >>>> click on PATH >>>> EDIT  >>>> new>> THEN PASTE THIS    C:\terraform
+SELECT OK> OK > OK
+
+OPEN THE POWESHELL AS ADMINISTRATOR
+
+and run this command 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Setting Up Terraform on Windows and GCP Authentication
+
+website :  https://cloud.google.com/sdk/docs/install
+click on windows 
+copy and paste teh command 
+
+the Google cloud CLI SET UP will get launch 
+next >>> next > next >> till the task is finish   ( DNOT WORRY IT TAKES MINIMUM 30MINS TO COMPLETE)2
+
+SELECT OPTION 3
+
+
+
+-------------------------------------------------------------------------------------------------------------
+
+DOWNLOAD VSC
+
+https://code.visualstudio.com/
+CLICK ON THE DOWNLOAD
+click on windows and the again click on download the installation file get downloaded 
+
+open the set-up file 
+accept the agreement >>>>  NEXT >>>>> NEXT
+CREATE THE directory/folder on desktop under name terra ( u can name it anything)
+click on FILE >>> open folder terra >>> yes, i trust the authors 
+create two files
+1. sa.json
+2. provider.tf
+
+NOW INSTALL PLUGIN
+HASHICORP TERRAFORM : SYNTAX HIGHLIGHTING
+
+
+
+terraform --version
+
+expected output 
+terraform v1.13.0
+on windows_386
+
+
+for sandy :    https://etherpad.opendev.org/p/sandy
+
+
+----------------------------------------------------------------------------------------------------------------------
+official site: https://registry.terraform.io/
+
+
+
+#vim provider.tf
+
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "6.48.0"
+    }
+  }
+}
+
+provider "google" { 
+    project     = "rapid-burner-459905-a6" 
+    region      = "us-central1" 
+    zone        = "us-central1-a" 
+    credentials = "C:/Users/inara/Desktop/terraform/terra.json"
+}
+
+
+
+
+
